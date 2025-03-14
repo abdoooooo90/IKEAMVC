@@ -9,12 +9,10 @@ namespace IKEA.PL.Controllers
 {
     public class DepartmentController : Controller
     {
+        #region Services
         private readonly IDepartmentService _departmentService;
         private readonly ILogger<DepartmentController> _logger;
         private readonly IWebHostEnvironment _environment;
-
-       
-        #region Services
         public DepartmentController(IDepartmentService departmentService, ILogger<DepartmentController> logger, IWebHostEnvironment environment)
         {
             _departmentService = departmentService;
@@ -42,7 +40,8 @@ namespace IKEA.PL.Controllers
         #endregion
         #region Post
         [HttpPost]
-         public IActionResult Create(CreatedDepartmentDto department)
+        [ValidateAntiForgeryToken] //علشان اللي لازم يعدل من الابلكيشن نفسه
+        public IActionResult Create(CreatedDepartmentDto department)
         {
             if (!ModelState.IsValid)
                 return View(department);
@@ -129,6 +128,7 @@ namespace IKEA.PL.Controllers
         #endregion
         #region  Post
         [HttpPost]
+        [ValidateAntiForgeryToken] //علشان اللي لازم يعدل من الابلكيشن نفسه
         public IActionResult Edit (int id, DepartmentEditViewModel departmentVM)
         {
             if (!ModelState.IsValid)
@@ -185,7 +185,8 @@ namespace IKEA.PL.Controllers
         }
         //---------------------
         [HttpPost]
-         public  IActionResult Delete(int id)
+        [ValidateAntiForgeryToken] //علشان اللي لازم يعدل من الابلكيشن نفسه
+        public  IActionResult Delete(int id)
         {
             var message = string.Empty;
             try
